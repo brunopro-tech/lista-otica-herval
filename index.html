@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leads Quentes — Reativação Julho 2026</title>
+<style>
+  body{font-family:'Segoe UI',Arial,sans-serif;max-width:820px;margin:0 auto;padding:24px 16px;background:#0a1a20;color:#e8e4d8;font-size:18px;}
+  h1{font-size:36px;color:#e8d44d;border-bottom:2px solid #e8d44d;padding-bottom:14px;}
+  p.sub{color:#9fb3ba;font-size:19px;margin-bottom:28px;line-height:1.5;}
+  .lead-card{background:#0d2530;border:1px solid rgba(255,255,255,.1);border-left:4px solid #e8d44d;border-radius:8px;padding:20px 22px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+  .lead-info b{font-size:24px;color:#fff;}
+  .lead-info span{display:block;font-size:18px;color:#9fb3ba;margin-top:4px;}
+  .lead-info .preview{margin-top:12px;font-size:18px;line-height:1.6;color:#c9d6da;background:rgba(255,255,255,.04);border-left:2px solid #25D366;padding:12px 14px;border-radius:4px;white-space:pre-line;max-width:560px;}
+  .wa-btn{background:#25D366;color:#fff;text-decoration:none;font-weight:700;font-size:18px;padding:14px 24px;border-radius:28px;white-space:nowrap;}
+  .wa-btn:hover{background:#1ebd5a;}
+  .count{color:#e8d44d;font-weight:700;}
+  footer{margin-top:32px;font-size:15px;color:#6b7f85;text-align:center;}
+</style>
+</head>
+<body>
+
+<h1>🔥 Leads Quentes — Julho 2026</h1>
+<p class="sub"><span class="count">31 leads</span> que mandaram receita <b>e</b> pediram orçamento em julho, mas não fecharam. Clique no botão pra abrir o WhatsApp já com a mensagem pronta — só ajustar e mandar.</p>
+
+<div id="leads"></div>
+
+<footer>Gerado a partir do Raio-X de Qualificação — Relatório Mensal Julho 2026</footer>
+
+<script>
+const mensagensVariacoes = [
+  (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nVi que você tinha pedido um orçamento com a gente. Você já comprou os óculos em algum outro lugar?\n\nSe ainda não fechou, você chegou a pegar outra cotação? Se tiver, me manda uma foto ou print dela antes de fechar — às vezes eu consigo cobrir o preço pra você.`,
+  (nome) => `Oi${nome?`, ${nome}`:''}, tudo bem? Aqui é da Ótica Herval Select.\n\nFicou faltando saber de você — já resolveu a questão dos óculos em outro lugar?\n\nCaso ainda não, e se você já tiver outra cotação na mão, me manda o print dela que eu vejo se consigo uma condição melhor antes de você fechar.`,
+  (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nPassando aqui pra saber se você já providenciou os óculos por outra ótica.\n\nSe ainda não, e se já tiver cotado em algum outro lugar, me manda o print ou foto da cotação — pode ser que eu consiga uma condição melhor pra você antes de decidir.`,
+  (nome) => `Oi${nome?`, ${nome}`:''}, tudo certo? Aqui é da Ótica Herval Select.\n\nQueria confirmar: você chegou a fechar os óculos em outra loja?\n\nSe não, e se já tiver algum orçamento em mãos, me manda a foto ou o print dele antes de fechar — às vezes dá pra eu bater o preço.`,
+  (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nSó pra confirmar: você já comprou seus óculos em outro lugar?\n\nSe ainda não fechou nada e tiver cotação de outra ótica, me manda o print dela antes — tem chance de eu conseguir um preço melhor pra você.`
+];
+
+const leads = [
+  {nome:"Gratidão Sempre", numero:"5521995470619", semNome:true},
+  {nome:"Isabela Leal", numero:"554491384836"},
+  {nome:"Angela Réia", numero:"554484082059"},
+  {nome:"Sandra Sales", numero:"554499839801"},
+  {nome:"Eder Coelho", numero:"554499649789"},
+  {nome:"Liz", numero:"554498204168"},
+  {nome:"Ana Paula Loni", numero:"554499333665"},
+  {nome:"Grazieli Brustolin", numero:"554498208605"},
+  {nome:"Elisa Mara Bernardi", numero:"554498788741"},
+  {nome:"Irene", numero:"554498521051"},
+  {nome:"Andreia", numero:"554499361953"},
+  {nome:"Ju Couto", numero:"554497468184"},
+  {nome:"Doublet Art", numero:"554488227781", semNome:true},
+  {nome:"Sueli da Silva Busto", numero:"554498090892"},
+  {nome:"Dey (Dep. Comercial CSY)", numero:"554488025871", semNome:true},
+  {nome:"Cris", numero:"554498299625"},
+  {nome:"Fabricio", numero:"554499260811"},
+  {nome:"Emanuelli Paiva", numero:"554498580106"},
+  {nome:"Jôsy", numero:"559892160192"},
+  {nome:"Rosimeire", numero:"554499322793"},
+  {nome:"Nathalie Costa", numero:"554491051874"},
+  {nome:"Vinicius", numero:"554499018536"},
+  {nome:"Daniel", numero:"554491171579"},
+  {nome:"Teresa", numero:"554499372158"},
+  {nome:"Rildo", numero:"554498638701"},
+  {nome:"Simone", numero:"554491083102"},
+  {nome:"Rodrigo Campos", numero:"554484125404"},
+  {nome:"Geneci Oliveira", numero:"554498188712"},
+  {nome:"Gisele", numero:"554498149050"},
+  {nome:"Fabio Marangoni", numero:"554499116861"},
+  {nome:"Jerusa Marques Fonseca", numero:"554497488887"}
+];
+
+const container = document.getElementById('leads');
+leads.forEach((lead, i) => {
+  const primeiroNome = lead.semNome ? '' : lead.nome.split(' ')[0];
+  const msg = mensagensVariacoes[i % mensagensVariacoes.length](primeiroNome);
+  const link = `https://wa.me/${lead.numero}?text=${encodeURIComponent(msg)}`;
+  const card = document.createElement('div');
+  card.className = 'lead-card';
+  card.innerHTML = `
+    <div class="lead-info">
+      <b>${lead.nome}</b>
+      <span>${lead.numero}</span>
+      <div class="preview">${msg}</div>
+    </div>
+    <a class="wa-btn" href="${link}" target="_blank">📲 Chamar no WhatsApp</a>
+  `;
+  container.appendChild(card);
+});
+</script>
+
+</body>
+</html>
