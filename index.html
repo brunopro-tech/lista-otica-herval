@@ -20,15 +20,45 @@
 </head>
 <body>
 
-<h1>🔥 Leads Quentes — Julho 2026</h1>
-<p class="sub"><span class="count">31 leads</span> que mandaram receita <b>e</b> pediram orçamento em julho, mas não fecharam. Clique no botão pra abrir o WhatsApp já com a mensagem pronta — só ajustar e mandar.</p>
+<h1 style="color:#4a9ab4;border-color:#4a9ab4">📅 Confirmar Visita ou Compra — Dia Marcado</h1>
+<p class="sub"><span class="count" style="color:#4a9ab4">3 leads</span> que confirmaram um dia específico pra vir na loja. Confira se elas vieram e se compraram. O botão abre a conversa direto no WhatsApp, sem mensagem pronta.</p>
+
+<div id="visitas"></div>
+
+<h1 style="margin-top:48px">🔥 Reativar Conversa</h1>
+<p class="sub"><span class="count">55 leads</span> qualificados (mandaram receita, pediram orçamento de lente/óculos, ou os dois) que engajaram em julho mas não fecharam. Orçamento de exame não conta como qualificação — só orçamento de produto. Ordenados por prioridade: primeiro quem mandou receita <b>e</b> orçamento, depois quem só mandou receita, depois quem só mandou orçamento.</p>
 
 <div id="leads"></div>
 
 <footer>Gerado a partir do Raio-X de Qualificação — Relatório Mensal Julho 2026</footer>
 
 <script>
-const mensagensVariacoes = [
+// ===== BLOCO 1: Visita/compra com dia marcado (sem mensagem pronta) =====
+const visitas = [
+  {nome:"Maura Marciliano Lemos", numero:"554498210809", dia:"terça-feira 11h"},
+  {nome:"Regina", numero:"554488310340", dia:"sábado de manhã"},
+  {nome:"Pri Maciel", numero:"554491547922", dia:"segunda-feira"}
+];
+
+const containerVisitas = document.getElementById('visitas');
+visitas.forEach((lead) => {
+  const link = `https://wa.me/${lead.numero}`;
+  const card = document.createElement('div');
+  card.className = 'lead-card';
+  card.style.borderLeftColor = '#4a9ab4';
+  card.innerHTML = `
+    <div class="lead-info">
+      <b>${lead.nome}</b>${lead.dia ? ` <span style="color:#4a9ab4;font-size:14px;font-weight:600;">(disse: ${lead.dia})</span>` : ''}
+      <span>${lead.numero}</span>
+    </div>
+    <a class="wa-btn" href="${link}" target="_blank">📲 Chamar no WhatsApp</a>
+  `;
+  containerVisitas.appendChild(card);
+});
+
+// ===== BLOCO 2: Reativar conversa — TODOS os qualificados, em ordem de prioridade =====
+
+const msgQuente = [
   (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nVi que você tinha pedido um orçamento com a gente.\nVocê já comprou os óculos em algum outro lugar?\n\nSe ainda não fechou, você chegou a pegar outra cotação?\nSe tiver, me manda uma foto ou print dela antes de fechar — vou tentar cobrir o preço pra você.`,
   (nome) => `Oi${nome?`, ${nome}`:''}, tudo bem? Aqui é da Ótica Herval Select.\n\nFicou faltando saber de você — já resolveu a questão dos óculos em outro lugar?\n\nCaso ainda não, e se você já tiver outra cotação na mão, me manda o print dela.\nVou ver o que consigo fazer pra te dar uma condição melhor antes de você fechar.`,
   (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nPassando aqui pra saber se você já providenciou os óculos por outra ótica.\n\nSe ainda não, e se já tiver cotado em algum outro lugar, me manda o print ou foto da cotação.\nVou tentar te dar uma condição melhor antes de você decidir.`,
@@ -36,44 +66,92 @@ const mensagensVariacoes = [
   (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nSó pra confirmar: você já comprou seus óculos em outro lugar?\n\nSe ainda não fechou nada e tiver cotação de outra ótica, me manda o print dela antes.\nVou tentar conseguir um preço melhor pra você.`
 ];
 
-const leads = [
-  {nome:"Gratidão Sempre", numero:"5521995470619", semNome:true},
-  {nome:"Isabela Leal", numero:"554491384836"},
-  {nome:"Angela Réia", numero:"554484082059"},
-  {nome:"Sandra Sales", numero:"554499839801"},
-  {nome:"Eder Coelho", numero:"554499649789"},
-  {nome:"Liz", numero:"554498204168"},
-  {nome:"Ana Paula Loni", numero:"554499333665"},
-  {nome:"Grazieli Brustolin", numero:"554498208605"},
-  {nome:"Elisa Mara Bernardi", numero:"554498788741"},
-  {nome:"Irene", numero:"554498521051"},
-  {nome:"Andreia", numero:"554499361953"},
-  {nome:"Ju Couto", numero:"554497468184"},
-  {nome:"Doublet Art", numero:"554488227781", semNome:true},
-  {nome:"Sueli da Silva Busto", numero:"554498090892"},
-  {nome:"Dey (Dep. Comercial CSY)", numero:"554488025871", semNome:true},
-  {nome:"Cris", numero:"554498299625"},
-  {nome:"Fabricio", numero:"554499260811"},
-  {nome:"Emanuelli Paiva", numero:"554498580106"},
-  {nome:"Jôsy", numero:"559892160192"},
-  {nome:"Rosimeire", numero:"554499322793"},
-  {nome:"Nathalie Costa", numero:"554491051874"},
-  {nome:"Vinicius", numero:"554499018536"},
-  {nome:"Daniel", numero:"554491171579"},
-  {nome:"Teresa", numero:"554499372158"},
-  {nome:"Rildo", numero:"554498638701"},
-  {nome:"Simone", numero:"554491083102"},
-  {nome:"Rodrigo Campos", numero:"554484125404"},
-  {nome:"Geneci Oliveira", numero:"554498188712"},
-  {nome:"Gisele", numero:"554498149050"},
-  {nome:"Fabio Marangoni", numero:"554499116861"},
-  {nome:"Jerusa Marques Fonseca", numero:"554497488887"}
+const msgOrcamentoProduto = [
+  (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nVi que você tinha perguntado sobre valores com a gente.\n\nAinda tem interesse? Se já tiver outra cotação, me manda o print que vejo se consigo uma condição melhor.`,
+  (nome) => `Oi${nome?`, ${nome}`:''}, tudo bem? Aqui é da Ótica Herval Select.\n\nFicou pendente aquela conversa sobre valores.\n\nAinda está precisando? Se já tiver cotado em outro lugar, me manda o print antes de fechar.`
 ];
 
+const msgReceita = [
+  (nome) => `Oi${nome?` ${nome}`:''}! Aqui é da Ótica Herval Select.\n\nVi que você já tinha me passado a receita, mas a gente não chegou a fechar o orçamento.\n\nAinda está precisando dos óculos? Se sim, consigo te passar os valores agora mesmo.`
+];
+
+// Ordem de prioridade: 1) quente (receita+orçamento), 2) só orçamento, 3) só receita
+const leads = [
+  // --- QUENTE: receita + orçamento (42) ---
+  {nome:"Gratidão Sempre", numero:"5521995470619", semNome:true, tipo:"quente"},
+  {nome:"Isabela Leal", numero:"554491384836", tipo:"quente"},
+  {nome:"Angela Réia", numero:"554484082059", tipo:"quente"},
+  {nome:"Sandra Sales", numero:"554499839801", tipo:"quente"},
+  {nome:"Eder Coelho", numero:"554499649789", tipo:"quente"},
+  {nome:"Liz", numero:"554498204168", tipo:"quente"},
+  {nome:"Ana Paula Loni", numero:"554499333665", tipo:"quente"},
+  {nome:"Grazieli Brustolin", numero:"554498208605", tipo:"quente"},
+  {nome:"Elisa Mara Bernardi", numero:"554498788741", tipo:"quente"},
+  {nome:"Irene", numero:"554498521051", tipo:"quente"},
+  {nome:"Andreia", numero:"554499361953", tipo:"quente"},
+  {nome:"Ju Couto", numero:"554497468184", tipo:"quente"},
+  {nome:"Doublet Art", numero:"554488227781", semNome:true, tipo:"quente"},
+  {nome:"Sueli da Silva Busto", numero:"554498090892", tipo:"quente"},
+  {nome:"Dey (Dep. Comercial CSY)", numero:"554488025871", semNome:true, tipo:"quente"},
+  {nome:"Cris", numero:"554498299625", tipo:"quente"},
+  {nome:"Fabricio", numero:"554499260811", tipo:"quente"},
+  {nome:"Emanuelli Paiva", numero:"554498580106", tipo:"quente"},
+  {nome:"Jôsy", numero:"559892160192", tipo:"quente"},
+  {nome:"Rosimeire", numero:"554499322793", tipo:"quente"},
+  {nome:"Nathalie Costa", numero:"554491051874", tipo:"quente"},
+  {nome:"Vinicius", numero:"554499018536", tipo:"quente"},
+  {nome:"Daniel", numero:"554491171579", tipo:"quente"},
+  {nome:"Teresa", numero:"554499372158", tipo:"quente"},
+  {nome:"Rildo", numero:"554498638701", tipo:"quente"},
+  {nome:"Simone", numero:"554491083102", tipo:"quente"},
+  {nome:"Rodrigo Campos", numero:"554484125404", tipo:"quente"},
+  {nome:"Geneci Oliveira", numero:"554498188712", tipo:"quente"},
+  {nome:"Gisele", numero:"554498149050", tipo:"quente"},
+  {nome:"Fabio Marangoni", numero:"554499116861", tipo:"quente"},
+  {nome:"Jerusa Marques Fonseca", numero:"554497488887", tipo:"quente"},
+  {nome:"Damares Santop", numero:"554488162542", tipo:"quente"},
+  {nome:"Flavia Bergamaschi", numero:"554499122001", tipo:"quente"},
+  {nome:"Tati Baddini", numero:"554499078447", tipo:"quente"},
+  {nome:"Silvana", numero:"554499580682", tipo:"quente"},
+  {nome:"Claudia", numero:"554488070001", tipo:"quente"},
+  {nome:"Cleo", numero:"554499082143", tipo:"quente"},
+  {nome:"Giovana Veiga", numero:"554499945175", tipo:"quente"},
+  {nome:"Thomas Colli", numero:"554498660173", tipo:"quente"},
+  {nome:"Elaine", numero:"554398537979", tipo:"quente"},
+  {nome:"Patricia", numero:"554498030781", tipo:"quente"},
+  {nome:"Alessandra", numero:"554497202612", tipo:"quente"},
+
+  // --- SÓ RECEITA (5) ---
+  {nome:"Odair José", numero:"554498186010", tipo:"receita"},
+  {nome:"Eliane Arabe", numero:"554497326767", tipo:"receita"},
+  {nome:"Eli", numero:"554484560260", tipo:"receita"},
+  {nome:"Kátia", numero:"554498278880", tipo:"receita"},
+  {nome:"Fontes", numero:"554498122993", tipo:"receita"},
+
+  // --- SÓ ORÇAMENTO DE PRODUTO — lente/óculos (8) ---
+  {nome:"Anamaria", numero:"554499365661", tipo:"orcamento-produto"},
+  {nome:"Millena Azevedo", numero:"5518981224114", tipo:"orcamento-produto"},
+  {nome:"Deus E Mais Na Minha Vida", numero:"554499956973", tipo:"orcamento-produto"},
+  {nome:"Lu Melo", numero:"554498491602", tipo:"orcamento-produto"},
+  {nome:"Dulce", numero:"554499092198", tipo:"orcamento-produto"},
+  {nome:"Cristina", numero:"554491344684", tipo:"orcamento-produto"},
+  {nome:"Juliana Vitali", numero:"554499416464", tipo:"orcamento-produto"},
+  {nome:"Gi", numero:"554498080335", tipo:"orcamento-produto"}
+];
+
+const msgsPorTipo = {
+  "quente": msgQuente,
+  "orcamento-produto": msgOrcamentoProduto,
+  "receita": msgReceita
+};
+
 const container = document.getElementById('leads');
-leads.forEach((lead, i) => {
+const contador = {"quente":0, "orcamento-produto":0, "receita":0};
+leads.forEach((lead) => {
   const primeiroNome = lead.semNome ? '' : lead.nome.split(' ')[0];
-  const msg = mensagensVariacoes[i % mensagensVariacoes.length](primeiroNome);
+  const variantes = msgsPorTipo[lead.tipo];
+  const msg = variantes[contador[lead.tipo] % variantes.length](primeiroNome);
+  contador[lead.tipo]++;
   const link = `https://wa.me/${lead.numero}?text=${encodeURIComponent(msg)}`;
   const card = document.createElement('div');
   card.className = 'lead-card';
